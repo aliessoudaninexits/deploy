@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulaire - Saisie</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .form-container {
+            background-color: #ffffff;
+            padding: 20px 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="date"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007BFF;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .error {
+            color: red;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Formulaire de Saisie</h2>
+        <form id="formulaire">
+            <div>
+                <label for="nom">Nom:</label>
+                <input type="text" id="nom" name="nom" placeholder="Entrez votre nom" required>
+            </div>
+
+            <div>
+                <label for="prenom">Prénom:</label>
+                <input type="text" id="prenom" name="prenom" placeholder="Entrez votre prénom" required>
+            </div>
+
+            <div>
+                <label for="email">Adresse mail:</label>
+                <input type="email" id="email" name="email" placeholder="Entrez votre email" required>
+            </div>
+
+            <div>
+                <label for="date-naissance">Date de Naissance:</label>
+                <input type="date" id="date-naissance" name="date-naissance" required>
+            </div>
+
+            <div>
+                <label>Sexe:</label>
+                <input type="radio" id="homme" name="sexe" value="Homme" required> Homme
+                <input type="radio" id="femme" name="sexe" value="Femme" required> Femme
+            </div>
+
+            <button type="button" onclick="validateForm()">Envoyer</button>
+        </form>
+    </div>
+
+    <script>
+        function validateForm() {
+            const nom = document.getElementById('nom').value.trim();
+            const prenom = document.getElementById('prenom').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const dateNaissance = document.getElementById('date-naissance').value;
+            const sexe = document.querySelector('input[name="sexe"]:checked');
+
+            let isValid = true;
+
+            // Validation checks
+            if (!nom || !prenom || !email || !dateNaissance || !sexe) {
+                alert("Veuillez remplir tous les champs correctement !");
+                isValid = false;
+            } else {
+                const birthYear = new Date(dateNaissance).getFullYear();
+                if (birthYear > 2006) {
+                    alert("L'âge doit être inférieur à 18 ans.");
+                    isValid = false;
+                }
+            }
+
+            // If valid, save data and redirect
+            if (isValid) {
+                localStorage.setItem('nom', nom);
+                localStorage.setItem('prenom', prenom);
+                localStorage.setItem('email', email);
+                localStorage.setItem('dateNaissance', dateNaissance);
+                localStorage.setItem('sexe', sexe.value);
+
+                // Redirect to the second page
+                window.location.href = "programme n°1 affichage.html";
+            }
+        }
+    </script>
+</body>
+</html>
